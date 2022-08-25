@@ -1,7 +1,13 @@
 <template>
   <div class="hello">
-    <h1> {{ info.name.name-EUfr }} </h1>
-    <img :src="img_url" />
+    <p> {{  }}Les villageois </p>
+    <div class="grille">
+      <ul v-for="villager in villagers" :key="villager.id" class="cards">
+        <img :src="villager.icon_uri" class="img-card"/>
+        <li>Personality: {{ villager.personality }}</li>
+        <li>Saying: <em>{{ villager.saying }}</em></li>
+      </ul>
+    </div>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -42,11 +48,11 @@ export default {
   data() {
     return {
       img_url: null,
-      info: null,
+      villagers: null,
     }
   },
   mounted() {
-    axios.get('https://acnhapi.com/v1/fish/3').then((response) => this.info = response.data)
+    axios.get('https://acnhapi.com/v1/villagers').then((response) => this.villagers = response.data)
   }
 }
 </script>
@@ -66,5 +72,22 @@ li {
 }
 a {
   color: #42b983;
+}
+.cards {
+  box-shadow: 2px 2px 5px #f2f2f2;
+  border-radius: 10px;
+  padding-bottom: 20px;
+}
+ul.cards{
+  display: flex;
+  flex-direction: column;
+}
+.grille {
+  display: grid;
+  grid-template-columns: fit-content(100%);
+}
+ul > img.img-card {
+  width: 30%;
+  align-self: center;
 }
 </style>
